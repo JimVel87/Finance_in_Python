@@ -178,7 +178,8 @@ def BSM_price(option, underlying_price, risk_free_interest_rate, volatility, div
     
     # Check option style; BSM is only for European options:
     if option.option_style == 'American':
-        print("The Black-Scholes model is only used to price European-style options, as it does not take into account that American-style options could be exercised before the expiration date!");
+        print("The Black-Scholes model is only used to price European-style options, as it does not take into account ",
+              "that American-style options could be exercised before the expiration date!");
         return None;
     else:
         d1 = (math.log(underlying_price/option.strike_price, math.e) + (risk_free_interest_rate-dividend_yield+volatility**2/2)*option.time_to_expiry)/(volatility*math.sqrt(option.time_to_expiry));
@@ -198,7 +199,8 @@ def BSM_warrant_price(warrant, underlying_price, risk_free_interest_rate, volati
         
     # Check warrant style; BSM is only for European warrants:
     if warrant.option_style == 'American':
-        print("The Black-Scholes model is only used to price European-style warrants, as it does not take into account that American-style warrants could be exercised before the expiration date!");
+        print("The Black-Scholes model is only used to price European-style warrants, as it does not take into account ",
+              "that American-style warrants could be exercised before the expiration date!");
         return None;
     else:
         haircut = outstanding_shares / (outstanding_shares + number_of_warrants); # multiplier to account for dilution
@@ -211,7 +213,8 @@ def BSM_warrant_price(warrant, underlying_price, risk_free_interest_rate, volati
 
 def BSM_for_fsolve(volatility, option_price, option, underlying_price, risk_free_interest_rate, dividend_yield):
     """
-    This function is only called by BSM_volatility(). It simply realigns the arguments and the result calculation so that it works with scipy.optimize.fsolve() root finder used by BSM_implied_volatility().
+    This function is only called by BSM_volatility().
+    It simply realigns the arguments and the result calculation so that it works with scipy.optimize.fsolve() root finder used by BSM_implied_volatility().
     """
     return option_price - BSM_price(option, underlying_price, risk_free_interest_rate, volatility, dividend_yield);
 
