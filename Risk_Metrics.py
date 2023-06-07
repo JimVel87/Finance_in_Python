@@ -101,15 +101,15 @@ def Binomial_VaR_backtesting(input_file, VaR, VaR_level, confidence_level):
         return None;
 
     if (VaR > 1 or VaR <= 0):
-        print("VaR must be less than 1 and more than 0!");
+        print("VaR must be less than or equal to 1 and more than 0!");
         return None;
     
     if (VaR_level > 1 or VaR_level <= 0):
-        print("The VaR level must be less than 1 and more than 0!");
+        print("The VaR level must be less than or equal to 1 and more than 0!");
         return None;
 
     if (confidence_level > 1 or confidence_level <= 0):
-        print("The confidence level must be less than 1 and more than 0!");
+        print("The confidence level must be less than or equal to 1 and more than 0!");
         return None;
     #################### End of input checks: ####################
 
