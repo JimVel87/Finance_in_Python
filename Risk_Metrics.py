@@ -73,6 +73,7 @@ def Stats_on_csv(input_file, lookback_period, holding_period, confidence_level, 
     VaR = -price_data['Log return'].quantile(1-confidence_level, interpolation='nearest');
     ES = -NP.average(price_data['Log return'][price_data['Log return'] < price_data['Log return'].quantile(1-confidence_level)]);
     volatility = price_data['Log return'].std()*math.sqrt(lookback_period); # annualised volatility
+    # Volatility above is calculated with the simple variance method, thus all observations have the same weight.
     
     # Visualisation:
     price_data['Log return'].plot(figsize=(12,6), ls="-", color="blue", label="Daily log returns", legend=True);
