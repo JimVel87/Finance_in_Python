@@ -13,7 +13,7 @@ def Stats_on_csv(input_file, lookback_period, holding_period, confidence_level, 
     VaR is given in % calculated on the worst log returns in the holding period.
     If save_file is true, it saves a copy of the data frame as csv file.
     """
-    #################### Input checks: ####################
+    #################### Input checks ####################
     if (type(input_file) != str):
         print("The input file name must be a string!");
         return None;
@@ -37,7 +37,7 @@ def Stats_on_csv(input_file, lookback_period, holding_period, confidence_level, 
     if (confidence_level > 1 or confidence_level <= 0):
         print("The confidence level must be less than 1 and more than 0!");
         return None;
-    #################### End of input checks: ####################
+    #################### End of input checks ####################
 
     # Loads the data from the csv file into a DataFrame:
     dtype_dict = { # dictates how the data will be interpreted
@@ -95,7 +95,7 @@ def Binomial_VaR_backtesting(input_file, VaR, VaR_level, confidence_level):
     The input file is in csv format retrieved from Yahoo! Finance, after log returns have been calculated. Column format:
     Date | Open | High | Low | Close | Adj. close | Volume | Log return
     """
-    #################### Input checks: ####################
+    #################### Input checks ####################
     if (type(input_file) != str):
         print("The input file name must be a string!");
         return None;
@@ -111,7 +111,7 @@ def Binomial_VaR_backtesting(input_file, VaR, VaR_level, confidence_level):
     if (confidence_level > 1 or confidence_level <= 0):
         print("The confidence level must be less than or equal to 1 and more than 0!");
         return None;
-    #################### End of input checks: ####################
+    #################### End of input checks ####################
 
     # Loads the data from the csv file into a DataFrame:
     dtype_dict = { # dictates how the data will be interpreted
@@ -158,7 +158,7 @@ def EWMA_volatility(input_file, alpha):
     The input file is in csv format retrieved from Yahoo! Finance, after log returns have been calculated. Column format:
     Date | Open | High | Low | Close | Adj. close | Volume | Log return
     """
-    #################### Input checks: ####################
+    #################### Input checks ####################
     if (type(input_file) != str):
         print("The input file name must be a string!");
         return None;
@@ -166,7 +166,7 @@ def EWMA_volatility(input_file, alpha):
     if (alpha > 1 or alpha < 0):
         print("The alpha weight must be less than 1 and more than 0!");
         return None;
-    #################### End of input checks: ####################
+    #################### End of input checks ####################
 
     # Loads the data from the csv file into a DataFrame:
     dtype_dict = { # dictates how the data will be interpreted
