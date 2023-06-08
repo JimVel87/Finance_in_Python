@@ -149,3 +149,48 @@ def Binomial_VaR_backtesting(input_file, VaR, VaR_level, confidence_level):
         "Z-statistic": round(z_statistic,4),
         "Non-rejection region": [round(lower_value,4),round(upper_value,4)]
     };
+
+def EWMA_volatility(input_file, alpha):
+    """
+    It returns volatility of returns calculated using the Exponentially Weighted Moving Average (EWMA) model:
+    The squared log returns are multiplied by a corresponding weight a(n), with 0<a<1 and a(n) = (1-a)*a^n.
+    The sum of these products is the variance; the volatility is the square root of the variance.
+    The input file is in csv format retrieved from Yahoo! Finance, after log returns have been calculated. Column format:
+    Date | Open | High | Low | Close | Adj. close | Volume | Log return
+    """
+    #################### Input checks: ####################
+    if (type(input_file) != str):
+        print("The input file name must be a string!");
+        return None;
+
+    if (alpha > 1 or alpha < 0):
+        print("The alpha weight must be less than 1 and more than 0!");
+        return None;
+    #################### End of input checks: ####################
+
+    # Loads the data from the csv file into a DataFrame:
+    dtype_dict = { # dictates how the data will be interpreted
+    'Open': 'float',
+    'High': 'float',
+    'Low': 'float',
+    'Close': 'float',
+    'Adj. close': 'float',
+    'Log return': 'float'
+    };
+    return_history = PD.read_csv(input_file, header=0, index_col=0, parse_dates=True, dtype=dtype_dict, thousands=',');
+    observations = len(return_history['Log return']); # number of total observations
+    
+    # Creates a new column for squared log returns and populates it:
+    return_history['Sq log return'] = return_history['Log return']**2;
+    
+    # Creates a new column for the weights and populates it:
+    temp_weights = [alpha]; # a temporary list for the weights, initialised with the weight for the most recent observation
+    for n in range(observations-1):
+        temp_weights.append((1-alpha)*alpha**n);
+    return_history['Weights'] = temp_weights;
+    
+    # Creates a new column for the weighted squared log returns:
+    return_history['Weight Sq log return'] = return_history['Sq log return'] * return_history['Weights'];
+    
+    # It calculates and returns the volatility:
+    return math.sqrt(return_history['Weight Sq log return'].sum());
